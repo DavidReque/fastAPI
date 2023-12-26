@@ -37,14 +37,21 @@ async def users():
 
 #Path
 @app.get("/user/{id}")
-async def user(id: int):
+async def get_user_by_id(id: int):
         return search_user(id)
             
 #Query
 @app.get("/userquery/")
-async def user(id: int):
+async def get_user_by_query(id: int):
     return search_user(id)
-        
+
+@app.post("/user/")
+async def create_user(user: User):
+     if type(search_user(user.id)) == User:
+        return {"error": "El usuario ya existe"}
+     else:
+        user_list.append(user)
+
 def search_user(id: int):
     users = filter(lambda user: user.id == id, user_list)
     try:
