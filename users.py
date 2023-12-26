@@ -45,6 +45,7 @@ async def get_user_by_id(id: int):
 async def get_user_by_query(id: int):
     return search_user(id)
 
+#post
 @app.post("/user/")
 async def create_user(user: User):
      if type(search_user(user.id)) == User:
@@ -53,6 +54,7 @@ async def create_user(user: User):
         user_list.append(user)
         return user
 
+#put
 @app.put("/user/")
 async def update_user(user: User):
 
@@ -67,6 +69,22 @@ async def update_user(user: User):
         return {"error": "No se ha actualizado el usuario"}
     else:
         return user
+    
+#delete
+@app.delete("/user/{id}")
+async def delete_user_by_id(id: int):
+
+    found = False
+
+    for index, saved_user in enumerate(user_list):
+        if saved_user.id == id:
+            del user_list[index]
+            found = True
+
+    if not found:
+        return {"error": "No se ha eliminado el usuario"}
+    else: 
+        return "El usuario se elimino"
 
 def search_user(id: int):
     users = filter(lambda user: user.id == id, user_list)
