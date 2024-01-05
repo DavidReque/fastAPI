@@ -12,7 +12,7 @@ class User(BaseModel):
 class UserDB(User):
     password: str
 
-user_db = {
+users_db = {
     "David": {
         "username": "David",
         "full_name": "Requeno",
@@ -28,3 +28,7 @@ user_db = {
         "password": "juan123"
     },
 }
+
+def search_user(username: str):
+    if username in users_db:
+        return UserDB(users_db[username])
