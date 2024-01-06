@@ -50,4 +50,4 @@ async def login(form: OAuth2PasswordRequestForm = Depends):
             status_code=400, detail="la contraseña no es correcta"
         )
     
-    return {}
+    return {"access_token": user.username, "token_type": "bearer"}
