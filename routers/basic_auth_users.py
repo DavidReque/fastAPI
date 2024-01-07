@@ -34,7 +34,7 @@ users_db = {
 
 def search_user(username: str):
     if username in users_db:
-        return UserDB(users_db[username])
+        return UserDB(**users_db[username])
     
 async def current_user(token: str = Depends(oauth2)):
     user = search_user(token)
