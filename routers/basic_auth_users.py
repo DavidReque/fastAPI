@@ -37,7 +37,7 @@ def search_user(username: str):
         return UserDB(users_db[username])
     
 @app.post("/login")
-async def login(form: OAuth2PasswordRequestForm = Depends):
+async def login(form: OAuth2PasswordRequestForm = Depends()):
     user_db = users_db.get(form.username)
     if not user_db: 
         raise HTTPException(
