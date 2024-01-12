@@ -29,14 +29,14 @@ users_db = {
         "full_name": "Requeno",
         "email": "dr@gmail.com",
         "disabled": False,
-        "password": "$2a$04$S78QVDqWsLEkafpe1Rj4NOSh3/Fw9UwmSIt1owdUlRRRfhnQRxeN"
+        "password": "$2a$12$/NOv/yZRhaPJQkjRvUG7AOF4OLjcWULjYkH4LuGbrDF9TNEIw.w5q"
     },
     "Juan": {
         "username": "Juan",
         "full_name": "J",
         "email": "juan@gmail.com",
         "disabled": True,
-        "password": "$2a$04$dGOpvQWYZfJaUY1UjjdPm.SWBCWrIp/PPFVoiXG27FMrT62nz8f02"
+        "password": "$2a$12$GaZ4t5p5QArittZeLq6bvO2jcJC23P3.gs36AmsRjXqJAbButyETK"
     },
 }
 
@@ -59,6 +59,7 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
             status_code=400, detail="la contraseña no es correcta"
         )
 
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_DURATION)
+    access_token = {"sub": user.username, 
+                    "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_DURATION)}
 
-    return {"access_token": user.username, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer"}
