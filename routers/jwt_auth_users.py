@@ -64,5 +64,5 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
     
     encoded_jwt = jwt.encode(access_token, "secret", algorithm=ALGORITHM)
 
-    return {"access_token": encoded_jwt, "token_type": "bearer"}
+    return {"access_token": encoded_jwt, "token_type": "bearer", "info": access_token}
 
