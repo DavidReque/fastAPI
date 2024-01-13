@@ -29,7 +29,7 @@ users_db = {
         "full_name": "Requeno",
         "email": "dr@gmail.com",
         "disabled": False,
-        "password": "$2a$12$/NOv/yZRhaPJQkjRvUG7AOF4OLjcWULjYkH4LuGbrDF9TNEIw.w5q"
+        "password": "$2a$12$UzUS3ePnaby9rUbkZ3omIelV00JOhVW35ZKV1cXVAayWMcP/wVOhK"
     },
     "Juan": {
         "username": "Juan",
@@ -61,5 +61,8 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
 
     access_token = {"sub": user.username, 
                     "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_DURATION)}
+    
+    encoded_jwt = jwt.encode(access_token, "secret", algorithm=ALGORITHM)
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": encoded_jwt, "token_type": "bearer"}
+
