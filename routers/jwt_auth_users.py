@@ -46,8 +46,7 @@ def search_user_db(username: str = Depends(oauth2)):
         return UserDB(**users_db[username])
     
 def search_user(username: str):
-    if username in users_db:
-        return User(**users_db[username])
+    return User(**users_db[username])
     
 async def auth_user(token: str):
 
