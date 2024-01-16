@@ -1,33 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from  db.models.user import User
+from db.client import db_client
 
 router = APIRouter(prefix="/userdb", 
                    tags=["userdb"],
                    responses={404: {"message": "No encontrado"}})
 
-class User(BaseModel):
-    id: int
-    name: str
-    surname: str
-    lastname: str
-    age: int
-
-user_list = [
-        User(
-            id=1,
-            name="David",
-            surname="Davv",
-            lastname="Requeno",
-            age=19
-        ),
-        User(
-            id=2,
-            name="Juan",
-            surname="j",
-            lastname="G",
-            age=30
-        ),
-    ]
+user_list = []
 
 @router.get("/")
 async def users():
