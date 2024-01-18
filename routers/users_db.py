@@ -29,9 +29,12 @@ async def create_user(user: User):
         #raise HTTPException(status_code=204, detail="El usuario ya existe")
      #else:
         
-    user_dict = dict(user)   
+    user_dict = dict(user)
+    del user_dict["id"]
 
-    db_client.local.users.insert_one(user_dict)
+    id = db_client.local.users.insert_one(user_dict).inserted_id
+
+    new_user = db_client.local.users.find_one({"_id": id})
 
     return user
 
