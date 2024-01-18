@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from  db.models.user import User
 from db.client import db_client
+from db.schemas.user import user_schema
 
 router = APIRouter(prefix="/userdb", 
                    tags=["userdb"],
@@ -27,16 +28,15 @@ async def get_user_by_query(id: int):
 async def create_user(user: User):
      #if type(search_user(user.id)) == User:
         #raise HTTPException(status_code=204, detail="El usuario ya existe")
-     #else:
         
     user_dict = dict(user)
     del user_dict["id"]
 
     id = db_client.local.users.insert_one(user_dict).inserted_id
 
-    new_user = db_client.local.users.find_one({"_id": id})
+    new_user = user_schema(db_client.local.users.find_one({"_id": id}))
 
-    return user
+    return User(**new_user)
 
 #put
 @router.put("/")
